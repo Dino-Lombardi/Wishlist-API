@@ -12,10 +12,10 @@ public class User {
 	private static final DAO<User> userDAO = daoFactory.getUserDAO();
 	
 	private int iduser;
-	private String username;
-	private String password;
 	private String firstname;
 	private String lastname;
+	private String username;
+	private String password;
 	private ArrayList<GiftList> giftlists;
 	private ArrayList<Invitation> invitations;
 	
@@ -24,12 +24,13 @@ public class User {
 		invitations = new ArrayList<Invitation>();
 	}
 	
-	public User(int iduser, String username, String password, String firstname, String lastname) {
+	public User(int iduser, String firstname, String lastname, String username, String password) {
 		this.iduser = iduser;
-		this.username = username;
-		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		
 		giftlists = new ArrayList<GiftList>();
 		invitations = new ArrayList<Invitation>();
 	}

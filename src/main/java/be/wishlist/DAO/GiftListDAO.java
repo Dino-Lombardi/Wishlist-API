@@ -40,11 +40,4 @@ public class GiftListDAO extends DAO<GiftList> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public ArrayList<GiftList> findAll(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

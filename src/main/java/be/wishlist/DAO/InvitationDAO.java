@@ -40,11 +40,4 @@ public class InvitationDAO extends DAO<Invitation> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public ArrayList<Invitation> findAll(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
