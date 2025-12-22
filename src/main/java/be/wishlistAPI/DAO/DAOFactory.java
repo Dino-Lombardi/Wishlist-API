@@ -1,11 +1,11 @@
-package be.wishlist.DAO;
+package be.wishlistAPI.DAO;
 
 import java.sql.Connection;
 
-import be.wishlist.Connection.DatabaseConnection;
-import be.wishlist.javabeans.GiftList;
-import be.wishlist.javabeans.Invitation;
-import be.wishlist.javabeans.User;
+import be.wishlistAPI.Connection.DatabaseConnection;
+import be.wishlistAPI.javabeans.GiftList;
+import be.wishlistAPI.javabeans.Invitation;
+import be.wishlistAPI.javabeans.User;
 
 public class DAOFactory extends AbstractDAOFactory {
 

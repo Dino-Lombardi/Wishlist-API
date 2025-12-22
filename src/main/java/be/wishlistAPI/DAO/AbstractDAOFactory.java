@@ -1,8 +1,8 @@
-package be.wishlist.DAO;
+package be.wishlistAPI.DAO;
 
-import be.wishlist.javabeans.GiftList;
-import be.wishlist.javabeans.Invitation;
-import be.wishlist.javabeans.User;
+import be.wishlistAPI.javabeans.GiftList;
+import be.wishlistAPI.javabeans.Invitation;
+import be.wishlistAPI.javabeans.User;
 
 public abstract class AbstractDAOFactory {
 	

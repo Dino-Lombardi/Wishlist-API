@@ -1,4 +1,4 @@
-package be.wishlist.enums;
+package be.wishlistAPI.enums;
 
 public enum InvitationStatus {
 

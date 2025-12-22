@@ -1,4 +1,4 @@
-package be.wishlist.DAO;
+package be.wishlistAPI.DAO;
 
 import java.sql.Array;
 import java.sql.CallableStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Struct;
 import java.util.ArrayList;
 
-import be.wishlist.javabeans.User;
+import be.wishlistAPI.javabeans.User;
 import oracle.jdbc.OracleTypes;
 
 public class UserDAO extends DAO<User>{
@@ -23,10 +23,10 @@ public class UserDAO extends DAO<User>{
 		String query = "{call INSERT_USER(?, ?, ?, ?)}";
 		try (CallableStatement cs = this.connect.prepareCall(query)){
 			
-			cs.setString(1, obj.getUsername());
-			cs.setString(2, obj.getPassword());
-			cs.setString(3, obj.getFirstname());
-			cs.setString(4, obj.getLastname());
+			cs.setString(1, obj.getFirstname());
+			cs.setString(2, obj.getLastname());
+			cs.setString(3, obj.getUsername());
+			cs.setString(4, obj.getPassword());
 			
 			cs.executeUpdate();
 			

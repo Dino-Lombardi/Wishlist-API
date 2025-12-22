@@ -1,6 +1,7 @@
-package be.wishlist.DAO;
+package be.wishlistAPI.DAO;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public abstract class DAO<T> {
