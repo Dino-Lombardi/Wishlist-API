@@ -50,14 +50,16 @@ public class UserDAO extends DAO<User>{
 			cs.executeQuery();
 	            
 			Object data = (Object) cs.getObject(1); 
-			Struct row = (Struct)data; 
-			Object[] values = (Object[]) row.getAttributes();
-			String firstname = String.valueOf(values[1]); 
-			String lastname = String.valueOf(values[2]);	           
-			String username = String.valueOf(values[3]);
-			String password = String.valueOf(values[4]);
-	            
-			user = new User(id, firstname, lastname, username, password);
+			if (data != null) {
+				Struct row = (Struct)data; 
+				Object[] values = (Object[]) row.getAttributes();
+				String firstname = String.valueOf(values[1]); 
+				String lastname = String.valueOf(values[2]);	           
+				String username = String.valueOf(values[3]);
+				String password = String.valueOf(values[4]);
+		            
+				user = new User(id, firstname, lastname, username, password);
+			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -111,16 +113,18 @@ public class UserDAO extends DAO<User>{
 			cs.setString(3, input_password);
 			cs.executeQuery();
 	            
-			Object data = (Object) cs.getObject(1); 
-			Struct row = (Struct)data; 
-			Object[] values = (Object[]) row.getAttributes();
-			int iduser = Integer.parseInt(String.valueOf(values[0]));
-			String firstname = String.valueOf(values[1]); 
-			String lastname = String.valueOf(values[2]);	           
-			String username = String.valueOf(values[3]);
-			String password = String.valueOf(values[4]);
-	            
-			user = new User(iduser, firstname, lastname, username, password);
+			Object data = (Object) cs.getObject(1);
+			if (data != null) {
+				Struct row = (Struct)data; 
+				Object[] values = (Object[]) row.getAttributes();
+				int iduser = Integer.parseInt(String.valueOf(values[0]));
+				String firstname = String.valueOf(values[1]); 
+				String lastname = String.valueOf(values[2]);	           
+				String username = String.valueOf(values[3]);
+				String password = String.valueOf(values[4]);
+		            
+				user = new User(iduser, firstname, lastname, username, password);
+			} 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
