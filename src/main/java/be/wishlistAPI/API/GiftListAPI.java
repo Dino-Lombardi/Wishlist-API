@@ -29,37 +29,35 @@ public class GiftListAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insertGiftList(String data) {
 		JSONObject json = new JSONObject(data);
-		String title = json.getString("title");
+		String title;
 		String description = json.optString("description", null);
-		String expirationdate = json.getString("expirationdate");
-		String status = json.optString("status", null);
+		JSONObject expirationdate;
+		int year;
+		int month;
+		int day;
+		String status = json.optString("status", "ACTIVE");
 		String sharelink = json.optString("sharelink", null);
+		int idowner;
 		
+		GiftList giftlist = new GiftList();
 		try {
 			 title = json.getString("title");
-			 expirationdate = json.getString("expirationdate");
+			 expirationdate = json.getJSONObject("expirationdate");
+			 year = expirationdate.getInt("year");
+			 month = expirationdate.getInt("monthValue");
+			 day = expirationdate.getInt("dayOfMonth");
+			 idowner = json.getInt("idowner");
+			 giftlist.setStatus(GiftListStatus.valueOf(status));
 		} catch (Exception e) {
 			return Response
 					.status(Status.BAD_REQUEST)
 					.build();
 		}
 		
-		int idowner = json.getInt("idowner");
 		
-		
-		if(title == null || expirationdate == null || status == null ) 
-		{
-			return Response
-					.status(Status.BAD_REQUEST)
-					.build();
-		}
-		
-		GiftList giftlist = new GiftList();
 		giftlist.setTitle(title);
 		giftlist.setDescription(description);
-		DateTimeFormatter frenchFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		giftlist.setExpirationdate(LocalDate.parse(expirationdate, frenchFormatter));		
-		giftlist.setStatus(GiftListStatus.valueOf(status));
+		giftlist.setExpirationdate(LocalDate.of(year, month, day));		
 		giftlist.setSharelink(sharelink);
 		User owner = new User();
 		owner.setIdUser(idowner);
@@ -113,18 +111,34 @@ public class GiftListAPI {
 	public Response updateGiftList(@PathParam("id") int id, String data) {
 		
 	    JSONObject json = new JSONObject(data);
-	    String title = json.getString("title");
-		String description = json.getString("description");
-		String expirationdate = json.getString("expirationdate");
-		String status = json.getString("status");
-		String sharelink = json.getString("sharelink");
-
-	    
+	    String title;
+		String description = json.optString("description", null);
+		JSONObject expirationdate;
+		int year;
+		int month;
+		int day;
+		String status = json.optString("status", "ACTIVE");
+		String sharelink = json.optString("sharelink", null);
+		int idgiftlist = id;
+		
 		GiftList giftlist = new GiftList();
+		try {
+			 title = json.getString("title");
+			 expirationdate = json.getJSONObject("expirationdate");
+			 year = expirationdate.getInt("year");
+			 month = expirationdate.getInt("monthValue");
+			 day = expirationdate.getInt("dayOfMonth");
+			 giftlist.setStatus(GiftListStatus.valueOf(status));
+		} catch (Exception e) {
+			return Response
+					.status(Status.BAD_REQUEST)
+					.build();
+		}
+	    
+		giftlist.setIdgiftlist(idgiftlist);
 		giftlist.setTitle(title);
 		giftlist.setDescription(description);
-		DateTimeFormatter frenchFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		giftlist.setExpirationdate(LocalDate.parse(expirationdate, frenchFormatter));
+		giftlist.setExpirationdate(LocalDate.of(year, month, day));
 		giftlist.setStatus(GiftListStatus.valueOf(status));
 		giftlist.setSharelink(sharelink);
 		
