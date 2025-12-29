@@ -170,4 +170,10 @@ public class UserDAO extends DAO<User>{
 		}	
 		return success;
 	}
+
+	@Override
+	public ArrayList<User> findAll(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

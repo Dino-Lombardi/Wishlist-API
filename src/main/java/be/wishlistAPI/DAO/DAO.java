@@ -17,6 +17,8 @@ public abstract class DAO<T> {
     public abstract T find(int id);
 
     public abstract ArrayList<T> findAll();
+    
+    public abstract ArrayList<T> findAll(int id);
 
     public abstract boolean update(T obj);
     
