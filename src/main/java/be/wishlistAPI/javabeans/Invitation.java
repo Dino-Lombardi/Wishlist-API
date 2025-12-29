@@ -1,14 +1,14 @@
-package be.wishlist.javabeans;
+package be.wishlistAPI.javabeans;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import be.wishlist.DAO.AbstractDAOFactory;
-import be.wishlist.DAO.DAO;
-import be.wishlist.DAO.InvitationDAO;
-import be.wishlist.DAO.UserDAO;
-import be.wishlist.enums.InvitationStatus;
+import be.wishlistAPI.DAO.AbstractDAOFactory;
+import be.wishlistAPI.DAO.DAO;
+import be.wishlistAPI.DAO.InvitationDAO;
+import be.wishlistAPI.DAO.UserDAO;
+import be.wishlistAPI.enums.InvitationStatus;
 
 public class Invitation 
 {
@@ -97,7 +97,7 @@ public class Invitation
 	
 	@Override public String toString() 
 	{
-		return "Invitation {" + "id=" + id + ", sentdate=" + sentdate + ", status=" + status + ", user=" + (user != null ? user.getIdUser() : "null") + ", giftlist=" + (giftlist != null ? giftlist.getId() : "null") + '}'; 
+		return "Invitation {" + "id=" + id + ", sentdate=" + sentdate + ", status=" + status + ", user=" + (user != null ? user.getIdUser() : "null") + ", giftlist=" + (giftlist != null ? giftlist.getIdgiftlist() : "null") + '}'; 
 	}
 	
 	public boolean create(Invitation obj) 

@@ -1,4 +1,4 @@
-package be.wishlist.Connection;
+package be.wishlistAPI.Connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

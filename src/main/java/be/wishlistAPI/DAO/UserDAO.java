@@ -1,4 +1,4 @@
-package be.wishlist.DAO;
+package be.wishlistAPI.DAO;
 
 import java.sql.Array;
 import java.sql.CallableStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Struct;
 import java.util.ArrayList;
 
-import be.wishlist.javabeans.User;
+import be.wishlistAPI.javabeans.User;
 import oracle.jdbc.OracleTypes;
 
 public class UserDAO extends DAO<User>{
@@ -23,10 +23,10 @@ public class UserDAO extends DAO<User>{
 		String query = "{call INSERT_USER(?, ?, ?, ?)}";
 		try (CallableStatement cs = this.connect.prepareCall(query)){
 			
-			cs.setString(1, obj.getUsername());
-			cs.setString(2, obj.getPassword());
-			cs.setString(3, obj.getFirstname());
-			cs.setString(4, obj.getLastname());
+			cs.setString(1, obj.getFirstname());
+			cs.setString(2, obj.getLastname());
+			cs.setString(3, obj.getUsername());
+			cs.setString(4, obj.getPassword());
 			
 			cs.executeUpdate();
 			
@@ -50,14 +50,16 @@ public class UserDAO extends DAO<User>{
 			cs.executeQuery();
 	            
 			Object data = (Object) cs.getObject(1); 
-			Struct row = (Struct)data; 
-			Object[] values = (Object[]) row.getAttributes();
-			String firstname = String.valueOf(values[1]); 
-			String lastname = String.valueOf(values[2]);	           
-			String username = String.valueOf(values[3]);
-			String password = String.valueOf(values[4]);
-	            
-			user = new User(id, firstname, lastname, username, password);
+			if (data != null) {
+				Struct row = (Struct)data; 
+				Object[] values = (Object[]) row.getAttributes();
+				String firstname = String.valueOf(values[1]); 
+				String lastname = String.valueOf(values[2]);	           
+				String username = String.valueOf(values[3]);
+				String password = String.valueOf(values[4]);
+		            
+				user = new User(id, firstname, lastname, username, password);
+			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -111,16 +113,18 @@ public class UserDAO extends DAO<User>{
 			cs.setString(3, input_password);
 			cs.executeQuery();
 	            
-			Object data = (Object) cs.getObject(1); 
-			Struct row = (Struct)data; 
-			Object[] values = (Object[]) row.getAttributes();
-			int iduser = Integer.parseInt(String.valueOf(values[0]));
-			String firstname = String.valueOf(values[1]); 
-			String lastname = String.valueOf(values[2]);	           
-			String username = String.valueOf(values[3]);
-			String password = String.valueOf(values[4]);
-	            
-			user = new User(iduser, firstname, lastname, username, password);
+			Object data = (Object) cs.getObject(1);
+			if (data != null) {
+				Struct row = (Struct)data; 
+				Object[] values = (Object[]) row.getAttributes();
+				int iduser = Integer.parseInt(String.valueOf(values[0]));
+				String firstname = String.valueOf(values[1]); 
+				String lastname = String.valueOf(values[2]);	           
+				String username = String.valueOf(values[3]);
+				String password = String.valueOf(values[4]);
+		            
+				user = new User(iduser, firstname, lastname, username, password);
+			} 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -165,5 +169,11 @@ public class UserDAO extends DAO<User>{
 			System.out.println(e.getMessage());
 		}	
 		return success;
+	}
+
+	@Override
+	public ArrayList<User> findAll(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

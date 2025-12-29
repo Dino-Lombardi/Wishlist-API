@@ -1,7 +1,6 @@
-package be.wishlist.javabeans;
+package be.wishlistAPI.javabeans;
 
-public class GiftList
-{
+public class Gift {
 	private int id;
 
 	public int getId() {
@@ -12,9 +11,8 @@ public class GiftList
 		this.id = id;
 	}
 	
-	public GiftList(int id) 
+	public Gift(int id) 
 	{
 		setId(id);
 	}
-	
 }

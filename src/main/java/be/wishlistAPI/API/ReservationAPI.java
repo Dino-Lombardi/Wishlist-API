@@ -1,4 +1,4 @@
-package be.wishlist.API;
+package be.wishlistAPI.API;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ import javax.ws.rs.core.Response.Status;
 
 import org.json.JSONObject;
 
-import be.wishlist.javabeans.Gift;
-import be.wishlist.javabeans.Reservation;
-import be.wishlist.javabeans.User;
+import be.wishlistAPI.javabeans.Gift;
+import be.wishlistAPI.javabeans.Reservation;
+import be.wishlistAPI.javabeans.User;
 
 @Path("/Reservation")
 public class ReservationAPI 

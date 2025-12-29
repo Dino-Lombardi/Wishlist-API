@@ -1,10 +1,10 @@
-package be.wishlist.javabeans;
+package be.wishlistAPI.javabeans;
 
 import java.util.ArrayList;
 
-import be.wishlist.DAO.AbstractDAOFactory;
-import be.wishlist.DAO.DAO;
-import be.wishlist.DAO.UserDAO;
+import be.wishlistAPI.DAO.AbstractDAOFactory;
+import be.wishlistAPI.DAO.DAO;
+import be.wishlistAPI.DAO.UserDAO;
 
 public class User {
 	

@@ -1,4 +1,4 @@
-package be.wishlist.API;
+package be.wishlistAPI.API;
 
 import javax.ws.rs.core.MediaType;
 
@@ -19,11 +19,11 @@ import javax.ws.rs.core.Response.Status;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import be.wishlist.enums.InvitationStatus;
-import be.wishlist.javabeans.GiftList;
-import be.wishlist.javabeans.Invitation;
-import be.wishlist.javabeans.InvitationDTO;
-import be.wishlist.javabeans.User;
+import be.wishlistAPI.enums.InvitationStatus;
+import be.wishlistAPI.javabeans.GiftList;
+import be.wishlistAPI.javabeans.Invitation;
+import be.wishlistAPI.javabeans.InvitationDTO;
+import be.wishlistAPI.javabeans.User;
 
 @Path("/Invitation")
 public class InvitationAPI 
@@ -42,7 +42,7 @@ public class InvitationAPI
 			User user = User.getUser(json.getInt("userid"));
 			
 			//modifier
-			GiftList gf = new GiftList(json.getInt("giftlistid"));
+			GiftList gf = GiftList.getGiftList(json.getInt("giftlistid"));
 			
 			if( status == null || user == null || gf == null ) 
 			{
@@ -109,7 +109,7 @@ public class InvitationAPI
 		    dto.status = inv.getStatus().name();
 		    dto.sent = inv.getSentdate();
 		    dto.userId = inv.getUser().getIdUser();
-		    dto.giftListId = inv.getGiftlist().getId();
+		    dto.giftListId = inv.getGiftlist().getIdgiftlist();
 		    dtos.add(dto);
 		}
 
@@ -126,7 +126,7 @@ public class InvitationAPI
 	@Path("/giftlist/{id}")
 	public Response getGiftListInvitations(@PathParam("id") int id) 
 	{
-		GiftList gf = new GiftList(id);
+		GiftList gf = GiftList.getGiftList(id);
 		
 		
 		ArrayList<Invitation> invitations = Invitation.findGiftListInvitations(gf);
@@ -146,7 +146,7 @@ public class InvitationAPI
 		    dto.status = inv.getStatus().name();
 		    dto.sent = inv.getSentdate();
 		    dto.userId = inv.getUser().getIdUser();
-		    dto.giftListId = inv.getGiftlist().getId();
+		    dto.giftListId = inv.getGiftlist().getIdgiftlist();
 		    dtos.add(dto);
 		}
 		
@@ -181,7 +181,7 @@ public class InvitationAPI
 			User user = User.getUser(json.getInt("userid"));
 			
 			//modifier
-			GiftList gf = new GiftList(json.getInt("giftlistid"));
+			GiftList gf = GiftList.getGiftList(json.getInt("giftlistid"));
 			
 			if( status == null || user == null || gf == null ) 
 			{

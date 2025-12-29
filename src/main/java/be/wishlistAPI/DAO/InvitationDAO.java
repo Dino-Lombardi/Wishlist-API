@@ -1,4 +1,4 @@
-package be.wishlist.DAO;
+package be.wishlistAPI.DAO;
 
 import java.sql.*;
 import java.sql.Connection;
@@ -7,12 +7,12 @@ import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import be.wishlistAPI.Connection.DatabaseConnection;
+import be.wishlistAPI.enums.InvitationStatus;
+import be.wishlistAPI.javabeans.GiftList;
+import be.wishlistAPI.javabeans.Invitation;
+import be.wishlistAPI.javabeans.User;
 
-import be.wishlist.Connection.DatabaseConnection;
-import be.wishlist.enums.InvitationStatus;
-import be.wishlist.javabeans.GiftList;
-import be.wishlist.javabeans.Invitation;
-import be.wishlist.javabeans.User;
 
 public class InvitationDAO extends DAO<Invitation> {
 	
@@ -31,7 +31,7 @@ public class InvitationDAO extends DAO<Invitation> {
 			cs.setTimestamp(1, Timestamp.valueOf(obj.getSentdate()));
 			cs.setString(2, obj.getStatus().name());
 			cs.setInt(3, obj.getUser().getIdUser());
-			cs.setInt(4, obj.getGiftlist().getId());
+			cs.setInt(4, obj.getGiftlist().getIdgiftlist());
 			
 			cs.registerOutParameter(5, Types.INTEGER);
 			cs.registerOutParameter(6, Types.INTEGER);
@@ -144,11 +144,6 @@ public class InvitationDAO extends DAO<Invitation> {
 		return null;
 	}
 
-	@Override
-	public ArrayList<Invitation> findAll() {
-		
-		return null;
-	}
 	//fait
 	public ArrayList<Invitation> findUserInvitations(User user)
 	{
@@ -173,7 +168,7 @@ public class InvitationDAO extends DAO<Invitation> {
 				LocalDateTime sent = ts.toLocalDateTime();
 				InvitationStatus status = InvitationStatus.valueOf(stat);
 				
-				GiftList gf = new GiftList(listid);
+				GiftList gf = GiftList.getGiftList(listid);
 				
 				Invitation i = new Invitation(id, status, user, gf,sent);
 				inv.add(i);
@@ -198,7 +193,7 @@ public class InvitationDAO extends DAO<Invitation> {
 			cs.setString(1, obj.getStatus().name());
 			cs.setTimestamp(2, Timestamp.valueOf(obj.getSentdate()));
 			cs.setInt(3, obj.getUser().getIdUser());
-			cs.setInt(4, obj.getGiftlist().getId());
+			cs.setInt(4, obj.getGiftlist().getIdgiftlist());
 			cs.registerOutParameter(5, Types.INTEGER);
 			
 			cs.execute();
@@ -222,7 +217,7 @@ public class InvitationDAO extends DAO<Invitation> {
 		try(CallableStatement cs = this.connect.prepareCall(query))
 		{
 			cs.registerOutParameter(1, Types.REF_CURSOR);
-			cs.setInt(2, gf.getId());
+			cs.setInt(2, gf.getIdgiftlist());
 			
 			cs.execute();
 			
@@ -251,5 +246,18 @@ public class InvitationDAO extends DAO<Invitation> {
 		}
 		return inv;
 	}
+
+	@Override
+	public ArrayList<Invitation> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Invitation> findAll(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
+

@@ -1,4 +1,4 @@
-package be.wishlist.javabeans;
+package be.wishlistAPI.javabeans;
 
 import java.time.LocalDateTime;
 
