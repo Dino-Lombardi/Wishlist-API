@@ -5,6 +5,7 @@ import java.sql.Connection;
 import be.wishlist.Connection.DatabaseConnection;
 import be.wishlist.javabeans.GiftList;
 import be.wishlist.javabeans.Invitation;
+import be.wishlist.javabeans.Reservation;
 import be.wishlist.javabeans.User;
 
 public class DAOFactory extends AbstractDAOFactory {
@@ -26,5 +27,10 @@ public class DAOFactory extends AbstractDAOFactory {
 		return new GiftListDAO(conn);
 	}
 
+	@Override
+	public DAO<Reservation> getReservationDAO()
+	{
+		return new ReservationDAO(conn);
+	}
 	
 }
