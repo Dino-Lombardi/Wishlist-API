@@ -1,6 +1,7 @@
 package be.wishlistAPI.DAO;
 
 
+import be.wishlistAPI.javabeans.Gift;
 import be.wishlistAPI.javabeans.GiftList;
 import be.wishlistAPI.javabeans.Invitation;
 import be.wishlistAPI.javabeans.Reservation;
@@ -17,6 +18,8 @@ public abstract class AbstractDAOFactory {
 	
 	public abstract DAO<GiftList> getGiftListDAO();
 	
+	public abstract DAO<Gift> getGiftDAO();
+
 	public abstract DAO<Reservation> getReservationDAO();
 	
 	public static AbstractDAOFactory getFactory(int type){
@@ -29,4 +32,5 @@ public abstract class AbstractDAOFactory {
 	        return null;
 	    }
 	}
+
 }
