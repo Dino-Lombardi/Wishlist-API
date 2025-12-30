@@ -125,7 +125,7 @@ public class GiftListDAO extends DAO<GiftList> {
 	public boolean update(GiftList obj) {
 		boolean success = false;
 		
-		String query = "{call UPDATE_USER(?, ?, ?, ?, ?, ?)}";
+		String query = "{call UPDATE_GIFTLIST(?, ?, ?, ?, ?, ?)}";
 		try (CallableStatement cs = this.connect.prepareCall(query)){
 			
 			cs.setInt(1, obj.getIdgiftlist());

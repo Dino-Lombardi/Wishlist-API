@@ -33,7 +33,8 @@ public class ReservationAPI
 			JSONObject json = new JSONObject(data);
 			LocalDate date = LocalDate.parse(json.getString("ReservationDate"));
 			User user = User.getUser(json.getInt("userid"));
-			Gift gf = new Gift(json.getInt("giftid"));
+			Gift gf = new Gift();
+			gf.setIdGift(json.getInt("giftid"));
 			Double amount = json.getDouble("amount");
 			boolean isgroup = json.getBoolean("isgroup");
 			
@@ -127,7 +128,8 @@ public class ReservationAPI
 	@Path("/gift/{id}")
 	public Response getGiftListInvitations(@PathParam("id") int id) 
 	{
-		Gift gf = new Gift(id);
+		Gift gf = new Gift();
+		gf.setIdGift(id);
 		
 		ArrayList<Reservation> res = Reservation.findGiftReservations(gf);
 		
@@ -154,7 +156,8 @@ public class ReservationAPI
 			JSONObject json = new JSONObject(data);
 			LocalDate date = LocalDate.parse(json.getString("ReservationDate"));
 			User user = User.getUser(json.getInt("userid"));
-			Gift gf = new Gift(json.getInt("giftid"));
+			Gift gf = new Gift();
+			gf.setIdGift(json.getInt("giftid"));
 			Double amount = json.getDouble("amount");
 			boolean isgroup = json.getBoolean("isgroup");
 			

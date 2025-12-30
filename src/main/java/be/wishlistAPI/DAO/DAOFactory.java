@@ -3,6 +3,7 @@ package be.wishlistAPI.DAO;
 import java.sql.Connection;
 
 import be.wishlistAPI.Connection.DatabaseConnection;
+import be.wishlistAPI.javabeans.Gift;
 import be.wishlistAPI.javabeans.GiftList;
 import be.wishlistAPI.javabeans.Invitation;
 import be.wishlistAPI.javabeans.Reservation;
@@ -25,6 +26,11 @@ public class DAOFactory extends AbstractDAOFactory {
 	@Override
 	public DAO<GiftList> getGiftListDAO() {
 		return new GiftListDAO(conn);
+	}
+	
+	@Override
+	public DAO<Gift> getGiftDAO(){
+		return new GiftDAO(conn);
 	}
 
 	@Override
