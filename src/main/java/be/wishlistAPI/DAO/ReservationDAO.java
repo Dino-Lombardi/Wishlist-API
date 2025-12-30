@@ -33,7 +33,7 @@ public class ReservationDAO extends DAO<Reservation>
 			cs.setDouble(2, obj.getAmount());
 			cs.setInt(3, obj.isIsgrouppurchase() ? 1 : 0);
 			cs.setInt(4, obj.getUser().getIdUser());
-			cs.setInt(5, obj.getGift().getId());
+			cs.setInt(5, obj.getGift().getIdGift());
 			cs.registerOutParameter(6, Types.INTEGER);
 			
 			cs.execute();
@@ -71,7 +71,8 @@ public class ReservationDAO extends DAO<Reservation>
 			
 			User user = User.getUser(cs.getInt(5));
 			//TODO
-			Gift gift = new Gift(cs.getInt(6));
+			Gift gift = new Gift();
+			gift.setIdGift(cs.getInt(6));
 			boolean isGroup = cs.getInt(4) == 1;
 			LocalDate reserved = cs.getDate(2).toLocalDate();
 			Reservation r = new Reservation(id, reserved, cs.getDouble(3), isGroup, user,gift);
@@ -163,7 +164,8 @@ public class ReservationDAO extends DAO<Reservation>
 				int id = rs.getInt("id_reservation");
 				Double amount = rs.getDouble("amount");
 				boolean b = rs.getBoolean("is_group_purchase");
-				Gift g = new Gift(rs.getInt("id_gift"));
+				Gift g = new Gift();
+				g.setIdGift(rs.getInt("id_gift"));
 				Reservation r = new Reservation(id,date, amount, b, user, g);
 				res.add(r);
 			}
@@ -185,7 +187,7 @@ public class ReservationDAO extends DAO<Reservation>
 		
 		try(CallableStatement cs = this.connect.prepareCall(query))
 		{
-			cs.setInt(1, gift.getId());
+			cs.setInt(1, gift.getIdGift());
 			cs.registerOutParameter(2, Types.REF_CURSOR);
 			
 			cs.execute();

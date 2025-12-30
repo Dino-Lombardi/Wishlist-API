@@ -142,7 +142,7 @@ public class Reservation
 	public String toString() {
 	    return "Reservation {" +"id=" + id +", reservationDate=" + reservationDate +", amount=" + amount +", isGroupPurchase=" + isgrouppurchase +
 	    		", user=" + (user != null ? user.getIdUser() + " - " + user.getFirstname() + " " + user.getLastname() : "null") +
-	            ", gift=" + (gift != null ? gift.getId() + " - "  /*gift.getName()*/ : "null") +'}';
+	            ", gift=" + (gift != null ? gift.getIdGift() + " - "  /*gift.getName()*/ : "null") +'}';
 	}
 
 	
