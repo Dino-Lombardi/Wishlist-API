@@ -3,6 +3,7 @@ package be.wishlistAPI.API;
 import javax.ws.rs.core.MediaType;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
@@ -22,7 +23,6 @@ import org.json.JSONObject;
 import be.wishlistAPI.enums.InvitationStatus;
 import be.wishlistAPI.javabeans.GiftList;
 import be.wishlistAPI.javabeans.Invitation;
-import be.wishlistAPI.javabeans.InvitationDTO;
 import be.wishlistAPI.javabeans.User;
 
 @Path("/Invitation")
@@ -35,7 +35,8 @@ public class InvitationAPI
 		try {
 			
 			JSONObject json = new JSONObject(data);
-			LocalDateTime sent = LocalDateTime.parse(json.getString("sent"));
+			DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+			LocalDateTime sent = LocalDateTime.parse(json.getString("sent"), formatter);
 			InvitationStatus status = InvitationStatus.valueOf(json.getString("status"));
 			
 			//Voir comment trouver le user
@@ -53,7 +54,7 @@ public class InvitationAPI
 			
 			Invitation inv = new Invitation(status, user, gf, sent);
 			
-			boolean ok = inv.create(inv);
+			boolean ok = Invitation.create(inv);
 			
 			if(ok) 
 			{
@@ -80,6 +81,26 @@ public class InvitationAPI
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("{id}")
+	public Response getInvitation(@PathParam("id") int id) 
+	{
+		Invitation i = Invitation.find(id);
+		
+		if(i==null) 
+		{
+			return Response
+					.status(Status.NOT_FOUND)
+					.build();
+		}
+		
+		return Response
+				.status(Status.OK)
+				.entity(i)
+				.build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/user/{id}")
 	public Response getUserInvitations(@PathParam("id") int id) 
 	{
@@ -100,23 +121,10 @@ public class InvitationAPI
 					.status(Status.NO_CONTENT)
 					.build();
 		}
-		
-		ArrayList<InvitationDTO> dtos = new ArrayList<>();
 
-		for (Invitation inv : invitations) {
-		    InvitationDTO dto = new InvitationDTO();
-		    dto.id = inv.getId();
-		    dto.status = inv.getStatus().name();
-		    dto.sent = inv.getSentdate();
-		    dto.userId = inv.getUser().getIdUser();
-		    dto.giftListId = inv.getGiftlist().getIdgiftlist();
-		    dtos.add(dto);
-		}
-
-		
 		return Response
 				.status(Status.OK)
-				.entity(dtos)
+				.entity(invitations)
 				.build();
 		
 	}
@@ -138,21 +146,9 @@ public class InvitationAPI
 					.build();
 		}
 		
-		ArrayList<InvitationDTO> dtos = new ArrayList<>();
-
-		for (Invitation inv : invitations) {
-		    InvitationDTO dto = new InvitationDTO();
-		    dto.id = inv.getId();
-		    dto.status = inv.getStatus().name();
-		    dto.sent = inv.getSentdate();
-		    dto.userId = inv.getUser().getIdUser();
-		    dto.giftListId = inv.getGiftlist().getIdgiftlist();
-		    dtos.add(dto);
-		}
-		
 		return Response
 				.status(Status.OK)
-				.entity(dtos)
+				.entity(invitations)
 				.build();
 	}
 	
@@ -195,13 +191,13 @@ public class InvitationAPI
 			exist.setUser(user); 
 			exist.setGiftlist(gf);
 			
-			boolean ok = exist.update(exist);
+			boolean ok = Invitation.update(exist);
 			
 			if(ok) 
 			{
 	
 				return Response
-						.status(Status.NO_CONTENT)
+						.status(Status.OK)
 						.build();
 			}
 			else 
@@ -238,12 +234,12 @@ public class InvitationAPI
 						.build();
 			}
 			
-			boolean ok = exist.delete(exist);
+			boolean ok = Invitation.delete(exist);
 			
 			if(ok) 
 			{
 				return Response
-						.status(Status.NO_CONTENT)
+						.status(Status.OK)
 						.build();
 			}
 			else 

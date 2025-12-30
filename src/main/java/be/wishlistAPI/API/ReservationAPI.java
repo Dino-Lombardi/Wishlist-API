@@ -74,6 +74,27 @@ public class ReservationAPI
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("{id}")
+	public Response getReservation(@PathParam("id") int id) 
+	{
+		Reservation r = Reservation.find(id);
+		
+		if (r == null) 
+		{ 
+			return Response
+					.status(Response.Status.NOT_FOUND) 
+					.build(); 
+		}
+		
+		return Response
+				.status(Status.OK)
+				.entity(r)
+				.build();
+		
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/user/{id}")
 	public Response getUserReservation(@PathParam("id") int id) 
 	{
@@ -204,4 +225,6 @@ public class ReservationAPI
 					.build();
 		}
 	}
+	
+	
 }

@@ -74,8 +74,6 @@ public class Invitation
 		setStatus(status);
 		setUser(user);
 		setGiftlist(list);
-		user.addInvitation(this);
-		//list.addinvitation
 	}
 	
 	public Invitation( InvitationStatus status, User user, GiftList list ,LocalDateTime date) 
@@ -100,17 +98,17 @@ public class Invitation
 		return "Invitation {" + "id=" + id + ", sentdate=" + sentdate + ", status=" + status + ", user=" + (user != null ? user.getIdUser() : "null") + ", giftlist=" + (giftlist != null ? giftlist.getIdgiftlist() : "null") + '}'; 
 	}
 	
-	public boolean create(Invitation obj) 
+	public static boolean create(Invitation obj) 
 	{
 		return invitationDAO.create(obj);
 	}
 	
-	public boolean update(Invitation obj) 
+	public static boolean update(Invitation obj) 
 	{
 		return invitationDAO.update(obj);
 	}
 	
-	public boolean delete(Invitation obj) 
+	public static boolean delete(Invitation obj) 
 	{
 		return invitationDAO.delete(obj);
 	}
