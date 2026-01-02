@@ -2,6 +2,7 @@ package be.wishlistAPI.javabeans;
 
 import java.util.ArrayList;
 
+import be.wishlistAPI.javabeans.GiftList;
 import be.wishlistAPI.DAO.AbstractDAOFactory;
 import be.wishlistAPI.DAO.DAO;
 import be.wishlistAPI.DAO.GiftDAO;
@@ -23,9 +24,8 @@ public class Gift {
 	public Gift() {}
 	
 	
-	public Gift(int idgift, String name, String description, double price, int priority, GiftStatus status, String image,
+	public Gift(String name, String description, double price, int priority, GiftStatus status, String image,
 			String buylink, GiftList giftlist) {
-		this.idgift = idgift;
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -34,6 +34,12 @@ public class Gift {
 		this.image = image;
 		this.buylink = buylink;
 		this.giftlist = giftlist;
+	}
+	
+	public Gift(int idgift, String name, String description, double price, int priority, GiftStatus status, String image,
+			String buylink, GiftList giftlist) {
+		this(name,description,price,priority,status,image,buylink,giftlist);
+		this.idgift = idgift;
 	}
 	
 	

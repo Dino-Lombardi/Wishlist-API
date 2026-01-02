@@ -26,10 +26,7 @@ public class GiftDAO extends DAO<Gift> {
 	public boolean create(Gift obj) {
 		boolean success = false;
 		String query = "{call INSERT_GIFT(?, ?, ?, ?, ?, ?, ?, ?)}";
-		byte[] imageBytes = Base64.getDecoder().decode(obj.getImage());
-		InputStream imagestream = new ByteArrayInputStream(imageBytes);
-		
-		
+				
 		try (CallableStatement cs = this.connect.prepareCall(query)){
 			
 			cs.setString(1, obj.getName());
@@ -37,10 +34,22 @@ public class GiftDAO extends DAO<Gift> {
 			cs.setDouble(3, obj.getPrice());
 			cs.setInt(4, obj.getPriority());
 			cs.setString(5, obj.getStatus().toString());
-			cs.setBinaryStream(6, imagestream);
+			
+			if (obj.getImage() == null || obj.getImage().isBlank()) {
+			    cs.setNull(6, java.sql.Types.BLOB);
+			} else 
+			{
+			    byte[] imageBytes = Base64.getDecoder().decode(obj.getImage());
+			    InputStream imagestream = new ByteArrayInputStream(imageBytes);
+			    cs.setBinaryStream(6, imagestream);
+			}
+			
 			cs.setString(7, obj.getBuylink());
 			cs.setInt(8, obj.getGiftlist().getIdgiftlist());
+			
+			
 
+			
 			cs.executeUpdate();
 			
 			success = true;
@@ -97,7 +106,7 @@ public class GiftDAO extends DAO<Gift> {
 		
 		ArrayList<Gift> gifts = new ArrayList<Gift>();
 
-		String query = "{? = call SELECT_GIFTLISTS_FROM_USER(?)}";
+		String query = "{? = call SELECT_GIFTS_FROM_GIFTLIST(?)}";
 
 		try (CallableStatement cs = this.connect.prepareCall(query)) {
 			
