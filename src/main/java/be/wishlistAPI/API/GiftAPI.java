@@ -26,49 +26,54 @@ public class GiftAPI {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response insertGift(String data) {
-		JSONObject json = new JSONObject(data);
-		String name;
-		String description = json.optString("description", null);
-		double price;
-		int priority;
-		String status = json.optString("status", "AVAILABLE");
-		String buylink = json.optString("sharelink", null);
-		int idgiftlist;
-		
-		Gift gift = new Gift();
 		try {
-			name = json.getString("name");
-			price = json.getDouble("price");
-			priority = json.getInt("priority");
-			idgiftlist = json.getInt("idgiftlist");
-			gift.setStatus(GiftStatus.valueOf(status));
-		} catch (Exception e) {
-			return Response
-					.status(Status.BAD_REQUEST)
-					.build();
-		}
-		
-		
-		gift.setName(name);
-		gift.setDescription(description);
-		gift.setPrice(price);
-		gift.setPriority(priority);
-		gift.setBuylink(buylink);
-		GiftList giftlist = new GiftList();
-		giftlist.setIdgiftlist(idgiftlist);
-		gift.setGiftlist(giftlist);
-		
-		boolean success = gift.insert();
-		if(!success) {
+			JSONObject json = new JSONObject(data);
+			String name;
+			String description = json.optString("description", null);
+			double price;
+			int priority;
+			String status = json.optString("status", String.valueOf(GiftStatus.AVAILABLE));
+			String buylink = json.optString("buylink", null);
+			int idgiftlist;
 			
-			return Response
-					.status(Status.SERVICE_UNAVAILABLE)
-					.build();
+			Gift gift = new Gift();
+				name = json.getString("name");
+				price = json.getDouble("price");
+				priority = json.getInt("priority");
+				idgiftlist = json.getInt("idgiftlist");
+				gift.setStatus(GiftStatus.valueOf(status));
+			
+			
+			
+			gift.setName(name);
+			gift.setDescription(description);
+			gift.setPrice(price);
+			gift.setPriority(priority);
+			gift.setBuylink(buylink);
+			GiftList giftlist = new GiftList();
+			giftlist.setIdgiftlist(idgiftlist);
+			gift.setGiftlist(giftlist);
+			
+			boolean success = gift.insert();
+
+			if(!success) {
+				
+				return Response
+						.status(Status.SERVICE_UNAVAILABLE)
+						.build();
+			}
+			else {
+				return Response
+						.status(Status.CREATED)
+						.header("Location", "/Wishlist-API/api/gift/" + giftlist.getIdgiftlist())
+						.build();
+			}
 		}
-		else {
+		catch(Exception e) 
+		{
+			e.printStackTrace();
 			return Response
-					.status(Status.CREATED)
-					.header("Location", "/Wishlist-API/api/gift/" + giftlist.getIdgiftlist())
+					.status(Status.INTERNAL_SERVER_ERROR)
 					.build();
 		}
 	}
@@ -80,9 +85,11 @@ public class GiftAPI {
 	public Response getGift(@PathParam("id") int id) {
 		
 		Gift gift = Gift.getGift(id);
+		
 		if(gift == null) {
 			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
+		
 		return Response.status(Status.OK).entity(gift).build();
 	}
 	
@@ -110,7 +117,7 @@ public class GiftAPI {
 		double price;
 		int priority;
 		String status = json.optString("status", "AVAILABLE");
-		String buylink = json.optString("sharelink", null);
+		String buylink = json.optString("buylink", null);
 		int idgiftlist;
 		
 		Gift gift = new Gift();
@@ -137,7 +144,7 @@ public class GiftAPI {
 		gift.setGiftlist(giftlist);
 		
 	        if (gift.update()) {
-	            return Response.status(Status.NO_CONTENT).build();
+	            return Response.status(Status.OK).build();
 	        } else {
 	            return Response.status(Status.SERVICE_UNAVAILABLE).build();
 	        }
@@ -153,6 +160,7 @@ public class GiftAPI {
 	        		return Response.status(Status.SERVICE_UNAVAILABLE).build();	
 	             }
 	        }
-	        return Response.status(Status.NO_CONTENT).build();
+	        
+	        return Response.status(Status.OK).build();
 	 }
 }

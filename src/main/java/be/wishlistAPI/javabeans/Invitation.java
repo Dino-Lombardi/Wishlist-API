@@ -9,6 +9,7 @@ import be.wishlistAPI.DAO.DAO;
 import be.wishlistAPI.DAO.InvitationDAO;
 import be.wishlistAPI.DAO.UserDAO;
 import be.wishlistAPI.enums.InvitationStatus;
+import be.wishlistAPI.javabeans.GiftList;
 
 public class Invitation 
 {
@@ -132,5 +133,10 @@ public class Invitation
 	public int getInvitationId(Invitation i) 
 	{
 		return ((InvitationDAO) invitationDAO).getInvitationId(i);
+	}
+	
+	public static ArrayList<GiftList> getInvitedGiftlist(int id) 
+	{
+		return  ((InvitationDAO) invitationDAO).getInvitedGiftlist(id);
 	}
 }

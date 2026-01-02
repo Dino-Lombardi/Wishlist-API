@@ -39,7 +39,6 @@ public class InvitationAPI
 			LocalDateTime sent = LocalDateTime.parse(json.getString("sent"), formatter);
 			InvitationStatus status = InvitationStatus.valueOf(json.getString("status"));
 			
-			//Voir comment trouver le user
 			User user = User.getUser(json.getInt("userid"));
 			
 			//modifier
@@ -151,6 +150,27 @@ public class InvitationAPI
 				.entity(invitations)
 				.build();
 	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/accepted/{id}")
+	public Response getInvitedGiftlist(@PathParam("id") int id) 
+	{
+		ArrayList<GiftList> gf = Invitation.getInvitedGiftlist(id);
+		
+		if(gf.isEmpty() || gf==null) 
+		{
+			return Response
+					.status(Status.NO_CONTENT)
+					.build();
+		}
+		
+		return Response
+		.status(Status.OK)
+		.entity(gf)
+		.build();
+	}
+	
 	
 	@PUT
 	@Path("{id}")

@@ -25,10 +25,11 @@ public class GiftDAO extends DAO<Gift> {
 	@Override
 	public boolean create(Gift obj) {
 		boolean success = false;
-		
 		String query = "{call INSERT_GIFT(?, ?, ?, ?, ?, ?, ?, ?)}";
 		byte[] imageBytes = Base64.getDecoder().decode(obj.getImage());
 		InputStream imagestream = new ByteArrayInputStream(imageBytes);
+		
+		
 		try (CallableStatement cs = this.connect.prepareCall(query)){
 			
 			cs.setString(1, obj.getName());
@@ -44,9 +45,9 @@ public class GiftDAO extends DAO<Gift> {
 			
 			success = true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		} 
-		
 		return success;
 	}
 	

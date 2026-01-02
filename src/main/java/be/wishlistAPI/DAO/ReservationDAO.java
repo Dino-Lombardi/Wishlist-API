@@ -39,7 +39,6 @@ public class ReservationDAO extends DAO<Reservation>
 			cs.execute();
 			
 			int updated = cs.getInt(6);
-			System.out.println(updated);
 			return updated == 1;
 			
 		}
@@ -71,8 +70,7 @@ public class ReservationDAO extends DAO<Reservation>
 			
 			User user = User.getUser(cs.getInt(5));
 			//TODO
-			Gift gift = new Gift();
-			gift.setIdGift(cs.getInt(6));
+			Gift gift = Gift.getGift(cs.getInt(6));
 			boolean isGroup = cs.getInt(4) == 1;
 			LocalDate reserved = cs.getDate(2).toLocalDate();
 			Reservation r = new Reservation(id, reserved, cs.getDouble(3), isGroup, user,gift);
@@ -164,8 +162,7 @@ public class ReservationDAO extends DAO<Reservation>
 				int id = rs.getInt("id_reservation");
 				Double amount = rs.getDouble("amount");
 				boolean b = rs.getBoolean("is_group_purchase");
-				Gift g = new Gift();
-				g.setIdGift(rs.getInt("id_gift"));
+				Gift g = Gift.getGift(rs.getInt("id_gift"));
 				Reservation r = new Reservation(id,date, amount, b, user, g);
 				res.add(r);
 			}

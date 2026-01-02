@@ -31,9 +31,9 @@ public class ReservationAPI
 		try 
 		{
 			JSONObject json = new JSONObject(data);
-			LocalDate date = LocalDate.parse(json.getString("ReservationDate"));
+			LocalDate date = LocalDate.parse(json.getString("reservationdate"));
 			User user = User.getUser(json.getInt("userid"));
-			Gift gf = new Gift();
+			Gift gf = Gift.getGift(json.getInt("giftid"));
 			gf.setIdGift(json.getInt("giftid"));
 			Double amount = json.getDouble("amount");
 			boolean isgroup = json.getBoolean("isgroup");
@@ -126,10 +126,9 @@ public class ReservationAPI
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/gift/{id}")
-	public Response getGiftListInvitations(@PathParam("id") int id) 
+	public Response getGiftListReservations(@PathParam("id") int id) 
 	{
-		Gift gf = new Gift();
-		gf.setIdGift(id);
+		Gift gf = Gift.getGift(id);
 		
 		ArrayList<Reservation> res = Reservation.findGiftReservations(gf);
 		
@@ -156,8 +155,7 @@ public class ReservationAPI
 			JSONObject json = new JSONObject(data);
 			LocalDate date = LocalDate.parse(json.getString("ReservationDate"));
 			User user = User.getUser(json.getInt("userid"));
-			Gift gf = new Gift();
-			gf.setIdGift(json.getInt("giftid"));
+			Gift gf = Gift.getGift(json.getInt("giftid"));
 			Double amount = json.getDouble("amount");
 			boolean isgroup = json.getBoolean("isgroup");
 			
@@ -175,13 +173,13 @@ public class ReservationAPI
 			if(ok) 
 			{
 				return Response
-						.status(Status.CREATED)
+						.status(Status.OK)
 						.build();
 			}
 			else 
 			{
 				return Response
-						.status(Status.SERVICE_UNAVAILABLE)
+						.status(Status.BAD_REQUEST)
 						.build();
 			}
 			
@@ -209,13 +207,13 @@ public class ReservationAPI
 			if(ok) 
 			{
 				return Response
-						.status(Status.CREATED)
+						.status(Status.OK)
 						.build();
 			}
 			else 
 			{
 				return Response
-						.status(Status.SERVICE_UNAVAILABLE)
+						.status(Status.BAD_REQUEST)
 						.build();
 			}
 			
