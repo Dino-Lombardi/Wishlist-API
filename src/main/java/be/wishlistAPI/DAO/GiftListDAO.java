@@ -61,11 +61,11 @@ public class GiftListDAO extends DAO<GiftList> {
 				Struct row = (Struct)data; 
 				Object[] values = (Object[]) row.getAttributes();
 				String title = String.valueOf(values[1]); 
-				String description = String.valueOf(values[2]);	           
+				String description = (values[2] == null ? null : String.valueOf(values[2]));	           
 				LocalDate creationdate = ((Timestamp)values[3]).toLocalDateTime().toLocalDate();
 				LocalDate expirationdate = ((Timestamp)values[4]).toLocalDateTime().toLocalDate();
 				GiftListStatus status = GiftListStatus.valueOf(String.valueOf(values[5]));
-				String sharelink = String.valueOf(values[6]);
+				String sharelink = (values[6] == null ? null : String.valueOf(values[6]));
 				User owner = new User();
 				owner.setIdUser(Integer.parseInt(String.valueOf(values[7])));
 				
@@ -99,11 +99,11 @@ public class GiftListDAO extends DAO<GiftList> {
 				    Object[] values = (Object[]) row.getAttributes();
 				    int id = Integer.valueOf(String.valueOf(values[0]));
 				    String title = String.valueOf(values[1]); 
-					String description = String.valueOf(values[2]);	           
+					String description = (values[2] == null ? null : String.valueOf(values[2]));           
 					LocalDate creationdate = ((Timestamp)values[3]).toLocalDateTime().toLocalDate();
 					LocalDate expirationdate = ((Timestamp)values[4]).toLocalDateTime().toLocalDate();
 					GiftListStatus status = GiftListStatus.valueOf(String.valueOf(values[5]));
-					String sharelink = String.valueOf(values[6]);
+					String sharelink = (values[6] == null ? null : String.valueOf(values[6]));
 					User owner = new User();
 					owner.setIdUser(Integer.parseInt(String.valueOf(values[7])));
 					    
