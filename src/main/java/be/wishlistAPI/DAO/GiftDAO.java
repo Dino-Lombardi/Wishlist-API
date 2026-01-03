@@ -96,7 +96,7 @@ public class GiftDAO extends DAO<Gift> {
 		
 		ArrayList<Gift> gifts = new ArrayList<Gift>();
 
-		String query = "{? = call SELECT_GIFTLISTS_FROM_USER(?)}";
+		String query = "{? = call SELECT_GIFTS_FROM_GIFTLIST(?)}";
 
 		try (CallableStatement cs = this.connect.prepareCall(query)) {
 			
