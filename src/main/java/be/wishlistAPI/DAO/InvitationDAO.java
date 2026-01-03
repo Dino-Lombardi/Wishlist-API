@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import be.wishlistAPI.Connection.DatabaseConnection;
+import be.wishlistAPI.enums.GiftListStatus;
 import be.wishlistAPI.enums.InvitationStatus;
 import be.wishlistAPI.javabeans.GiftList;
 import be.wishlistAPI.javabeans.Invitation;
@@ -257,6 +258,49 @@ public class InvitationDAO extends DAO<Invitation> {
 	public ArrayList<Invitation> findAll(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public ArrayList<GiftList> getInvitedGiftlist(int id)
+	{
+		String query = "{call getAcceptedInvitations(?,?)}";
+		ArrayList<GiftList> gls = new ArrayList<GiftList>();
+		
+		try (CallableStatement cs = this.connect.prepareCall(query))
+		{
+			cs.setInt(1, id);
+			cs.registerOutParameter(2, Types.REF_CURSOR);
+			
+			cs.execute();
+			
+			ResultSet rs = (ResultSet) cs.getObject(2);
+			
+			while(rs.next()) 
+			{
+				int idgiftlist = rs.getInt("id_giftlist");
+	            String title = rs.getString("title");
+	            String description = rs.getString("description");
+
+	            LocalDate creationdate = rs.getDate("creationdate").toLocalDate();
+	            LocalDate expirationdate = rs.getDate("expirationdate").toLocalDate();
+
+	            GiftListStatus status = GiftListStatus.valueOf(rs.getString("status"));
+
+	            String sharelink = rs.getString("sharelink");
+
+	            User owner = User.getUser(rs.getInt("id_user"));
+
+	            GiftList gl = new GiftList(idgiftlist,title,description,creationdate,
+	                expirationdate,status,sharelink,owner);
+
+	            gls.add(gl);
+			}
+			return gls;
+		}
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
 	}
 	
 }
