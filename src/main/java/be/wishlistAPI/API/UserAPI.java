@@ -88,10 +88,22 @@ public class UserAPI {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{id}")
+	@Path("id/{id}")
 	public Response getUser(@PathParam("id") int id) {
 		
 		User user = User.getUser(id);
+		if(user == null) {
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		}
+		return Response.status(Status.OK).entity(user).build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("username/{username}")
+	public Response getUserByUsername(@PathParam("username") String username) {
+		
+		User user = User.getUser(username);
 		if(user == null) {
 			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
