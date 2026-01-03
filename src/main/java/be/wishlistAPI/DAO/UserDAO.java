@@ -66,6 +66,33 @@ public class UserDAO extends DAO<User>{
 		return user;
 	}
 	
+	public User find(String username) {
+		User user = null;
+	       
+		String query = "{? = call FIND_BY_USERNAME(?)}";
+		 
+		try (CallableStatement cs = this.connect.prepareCall(query)) { 
+			cs.registerOutParameter(1, OracleTypes.STRUCT, "TYP_USER");
+			cs.setString(2, username); 
+			cs.executeQuery();
+	            
+			Object data = (Object) cs.getObject(1); 
+			if (data != null) {
+				Struct row = (Struct)data; 
+				Object[] values = (Object[]) row.getAttributes();
+				int id = Integer.parseInt(String.valueOf(values[0]));
+				String firstname = String.valueOf(values[1]); 
+				String lastname = String.valueOf(values[2]);	           
+				String password = String.valueOf(values[4]);
+		            
+				user = new User(id, firstname, lastname, username, password);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return user;
+	}
+	
 	@Override
 	public ArrayList<User> findAll() {
 		
