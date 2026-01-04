@@ -101,6 +101,7 @@ public class GiftAPI {
 		int priority;
 		String status = json.optString("status", "AVAILABLE");
 		String buylink = json.optString("buylink", null);
+		String image = json.optString("image", null);
 		int idgiftlist;
 		
 		Gift gift = new Gift();
@@ -125,6 +126,8 @@ public class GiftAPI {
 		GiftList giftlist = new GiftList();
 		giftlist.setIdgiftlist(idgiftlist);
 		gift.setGiftlist(giftlist);
+		gift.setImage(image);
+
 		
 	        if (gift.update()) {
 	            return Response.status(Status.OK).build();

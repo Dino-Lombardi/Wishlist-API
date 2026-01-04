@@ -126,7 +126,7 @@ public class ReservationAPI
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/gift/{id}")
-	public Response getGiftListReservations(@PathParam("id") int id) 
+	public Response getGiftReservations(@PathParam("id") int id) 
 	{
 		Gift gf = Gift.getGift(id);
 		
@@ -144,6 +144,7 @@ public class ReservationAPI
 				.entity(res)
 				.build();
 	}
+	
 	
 	@PUT
 	@Path("{id}")
